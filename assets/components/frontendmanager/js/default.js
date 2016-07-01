@@ -27,7 +27,7 @@ var frontendManager = {
 			  	beforeAppend: function() {
 				    // iframe загружен
 				    this.content.find('iframe').on('load', function() {
-				      $(this).contents().find("head").append($("<style type='text/css'>  #modx-header, #modx-leftbar, .x-layout-split, #modx-abtn-duplicate, #modx-abtn-preview, #modx-abtn-cancel, #modx-abtn-help {display:none !important;} #modx-action-buttons {top: 0;} #modx-content {width:100% !important}  </style>"));
+				      $(this).contents().find("head").append($("<style type='text/css'>  #modx-header, #modx-leftbar, .x-layout-split, #modx-abtn-duplicate, #modx-abtn-preview, #modx-abtn-cancel, #modx-abtn-help, #modx-chunk-msg, #modx-chunk-msg + .x-panel {display:none !important;} #modx-action-buttons {top: 0;} #modx-content {width:100% !important}  </style>"));
 				    });
 				 }
 			  }
