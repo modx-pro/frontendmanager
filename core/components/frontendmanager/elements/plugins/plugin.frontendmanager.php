@@ -8,17 +8,8 @@ switch ($modx->event->name) {
         break;
     case 'OnBeforeManagerPageInit':
         if ($_GET['frame']) {
-            $modx->controller->addHtml('<script>Ext.onReady(function() {
-                setTimeout(function() {
-                    if (Ext.getCmp("modx-panel-resource")) {
-                        Ext.getCmp("modx-panel-resource").on("success", function(){top.window.location.href = top.window.location.href});
-                    }
-                    if (Ext.getCmp("modx-panel-chunk")) {
-                        Ext.getCmp("modx-panel-chunk").on("success", function(){top.window.location.href = top.window.location.href});
-                    }
-                }, 1000);
-            });
-            </script>');
+			$modx->regClientCSS('/assets/components/frontendmanager/css/mgr/'.$modx->getOption('frontendmanager_manager_css', NULL, 'manager.css'));
+			$modx->regClientStartupScript('/assets/components/frontendmanager/js/mgr/'.$modx->getOption('frontendmanager_manager_js', NULL, 'manager.js'));
         }
         break;
     default:

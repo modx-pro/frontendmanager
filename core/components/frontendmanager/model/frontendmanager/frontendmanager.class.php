@@ -46,23 +46,17 @@ class frontendManager {
 		if (!empty($this->initialized[$ctx])) {
             return true;
         }
-		$this->modx->regClientCSS($this->config['cssUrl'].'default.css');
-		$this->modx->regClientScript($this->config['jsUrl'].'default.js');
-		$this->modx->regClientStartupHTMLBlock($this->pdoTools->getChunk('tpl.frontendmanager.panel'));
-
 
 		$config_js = array(
-				'ctx' => $ctx,
-				'jsUrl' => $this->config['jsUrl'],
-				'cssUrl' => $this->config['cssUrl'],
-				'actionUrl' => $this->config['actionUrl'],
-				'close_all_message' => $this->modx->lexicon('tickets_message_close_all'),
-				'tpanel' => (int)$this->authenticated,
-				'enable_editor' => (int)$this->modx->getOption('tickets.enable_editor'),
-			);
-			$this->modx->regClientStartupScript('<script type="text/javascript">frontendManagerConfig=' . $this->modx->toJSON($config_js) . ';</script>', true);
+			'ctx' => $ctx,
+			'jsUrl' => $this->config['jsUrl'],
+			'cssUrl' => $this->config['cssUrl'],
+		);
+		$this->modx->regClientStartupScript('<script type="text/javascript">frontendManagerConfig=' . $this->modx->toJSON($config_js) . ';</script>', true);
 
-
+		$this->modx->regClientCSS($this->config['cssUrl'].'web/'.$this->modx->getOption('frontendmanager_frontend_css', NULL, 'frontend.css'));
+		$this->modx->regClientScript($this->config['jsUrl'].'web/'.$this->modx->getOption('frontendmanager_frontend_js', NULL, 'frontend.js'));
+		$this->modx->regClientStartupHTMLBlock($this->pdoTools->getChunk($this->modx->getOption('frontendmanager_frontend_tpl', NULL, 'tpl.frontendmanager.panel')));
 
 
 		$this->initialized[$ctx] = true;

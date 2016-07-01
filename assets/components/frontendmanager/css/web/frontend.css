@@ -1,4 +1,4 @@
-@import "fonts/style.css";
+@import "../fonts/style.css";
 
 .fm-panel {
     background-image: linear-gradient(to right,#3f4850 0,#365462 46%,#3e5554 60%,#42554d 68%,#573d4e 100%);

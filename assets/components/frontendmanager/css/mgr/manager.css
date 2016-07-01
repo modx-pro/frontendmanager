@@ -1,0 +1,14 @@
+#modx-header,
+#modx-leftbar,
+.x-layout-split,
+#modx-abtn-duplicate,
+#modx-abtn-delete,
+#modx-abtn-preview,
+#modx-abtn-cancel,
+#modx-abtn-help,
+#modx-chunk-msg,
+#modx-chunk-msg + .x-panel {
+	display:none !important;
+}
+#modx-action-buttons {top: 0;}
+#modx-content {width:100% !important;}
