@@ -20,7 +20,7 @@ var frontendManager = {
 	open: function(link){
 			$.magnificPopup.open({
 			  items: {
-			    src: link
+			    src: link + '&frame=1'
 			  },
 			  type: 'iframe',
 			  callbacks: {
