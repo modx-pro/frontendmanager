@@ -26,7 +26,16 @@ body.fm {padding-top: 40px !important;}
 }
 
 .fm-panel a.logo img {height: 20px;}
-
+.fm-panel.button {
+    display: inline-block;
+    position: static;
+    padding: 0 15px;
+    color: #fff;
+}
+.fm-panel.button:hover {
+    background: #3B5C69;
+    text-decoration: none;
+}
 
 
 body .mfp-iframe-scaler iframe {
