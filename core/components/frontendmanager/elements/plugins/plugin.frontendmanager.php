@@ -7,9 +7,9 @@ switch ($modx->event->name) {
         $frontendManager->initialize($modx->context->key);
         break;
     case 'OnBeforeManagerPageInit':
-        if ($_GET['frame']) {
-			$modx->regClientCSS('/assets/components/frontendmanager/css/mgr/'.$modx->getOption('frontendmanager_manager_css', NULL, 'manager.css'));
-			$modx->regClientStartupScript('/assets/components/frontendmanager/js/mgr/'.$modx->getOption('frontendmanager_manager_js', NULL, 'manager.js'));
+       if ($_GET['frame']) {
+			$modx->regClientCSS(MODX_ASSETS_URL.'components/frontendmanager/css/mgr/'.$modx->getOption('frontendmanager_manager_css', NULL, 'manager.css'));
+			$modx->regClientStartupScript(MODX_ASSETS_URL.'components/frontendmanager/js/mgr/'.$modx->getOption('frontendmanager_manager_js', NULL, 'manager.js'));
         }
         break;
     default:
