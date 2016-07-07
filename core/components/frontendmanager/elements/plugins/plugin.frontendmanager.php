@@ -1,5 +1,5 @@
 <?php
-if(!$modx->user->isAuthenticated('mgr')) return;
+if (!$modx->user->hasSessionContext('mgr')) return;
 switch ($modx->event->name) {
     case 'OnLoadWebDocument':
         $frontendManager = $modx->getService('frontendmanager','frontendManager', MODX_CORE_PATH . 'components/frontendmanager/model/frontendmanager/', array());
