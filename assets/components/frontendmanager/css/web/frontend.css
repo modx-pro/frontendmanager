@@ -44,7 +44,14 @@ body .mfp-iframe-scaler iframe {
     border-radius: 5px;
 }
 
-
+@media all and (max-width: 768px) {
+    .fm-text {
+        display:none !important;
+    }
+    .fm-panel a span {
+        margin:0;
+    }
+}
 
 
 /* Magnific Popup CSS */
