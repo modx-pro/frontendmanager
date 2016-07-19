@@ -7,7 +7,7 @@ $tmp = array(
 		'file' => 'frontendmanager',
 		'description' => '',
 		'events' => array(
-			'OnLoadWebDocument' => array(),
+			'OnWebPagePrerender' => array(),
 			'OnBeforeManagerPageInit' => array(),
 		)
 	)
