@@ -40,7 +40,7 @@ function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-// работает с куками
+// функция триггера, работает с куками
 $(document).ready(function(){
     var fmStateCookie = $.cookie('fmState');
     $(".fm-trigger").click(function(){
