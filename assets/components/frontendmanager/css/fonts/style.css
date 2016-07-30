@@ -24,16 +24,19 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-earth:before {
-    content: "\e902";
-}
-.icon-settings:before {
-    content: "\e903";
-}
-.icon-users:before {
-    content: "\e901";
+.icon-trigger:before {
+  content: "\e900";
 }
 .icon-edit:before {
-    content: "\e900";
+  content: "\e901";
+}
+.icon-users:before {
+  content: "\e902";
+}
+.icon-earth:before {
+  content: "\e903";
+}
+.icon-settings:before {
+  content: "\e904";
 }
 

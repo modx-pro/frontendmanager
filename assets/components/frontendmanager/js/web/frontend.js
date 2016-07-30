@@ -39,3 +39,13 @@ function getCookie(name) {
   ));
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
+
+
+$(document).ready(function(){
+    $(".fm-trigger").click(function(){
+        $(".fm-panel").slideToggle("fast");
+        $(this).toggleClass("active");
+        $("body").toggleClass("active");
+        return false;
+    });
+});

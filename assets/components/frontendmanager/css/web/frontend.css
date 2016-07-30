@@ -2,19 +2,53 @@
 
 .fm-panel {
     background-image: linear-gradient(to right,#3f4850 0,#365462 46%,#3e5554 60%,#42554d 68%,#573d4e 100%);
-    box-shadow: 0 2px 0 #E4E4E4;
+    box-shadow: 0 2px 0 #E4E4E4; 
     height: 40px;
 	line-height: 40px;
 	font-size: 13px;
     position: fixed;
     z-index: 1040;
     top: 0;
-    left: 0;
+    left: 40px;
     right: 0;
-    display: block;
+    display: none;
 }
 
-body.fm {padding-top: 40px !important;}
+.fm-trigger{
+	position:fixed; 
+	display:block;
+	cursor:pointer;
+	z-index: 1040; 
+	top: 0;
+    left: 0;
+    width: 40px; 
+	height: 40px; 
+	color: #FFFFFF; 
+	background: #3F4951; 
+	border-right: 1px solid #2F4150;
+    box-shadow: 0 2px 0 #E4E4E4;
+}
+.fm-trigger:hover{background: #3B5C69;}
+.fm-trigger span{
+	display:block; 
+	text-align:center; 
+	line-height: 40px;  
+	-webkit-transition: -webkit-transform .2s;
+    transition: -webkit-transform .2s;
+    transition: transform .2s;
+} 
+
+.active.fm-trigger span{
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transition: transform .2s,-webkit-transform .2s;
+}
+
+body.fm.active{
+    padding-top: 40px !important;	
+}
+
+body.fm {padding-top: 0px !important;}
 .fm-panel a {color:#fff !important; border-right: 1px solid #2F4150;padding: 0 20px; display: inline-block; outline: 0 !important; text-decoration: none !important;    float: left;}
 .fm-panel a:hover {    background: #3B5C69;}
 
@@ -36,7 +70,6 @@ body.fm {padding-top: 40px !important;}
     background: #3B5C69;
     text-decoration: none;
 }
-
 
 body .mfp-iframe-scaler iframe {
 	padding: 30px;
