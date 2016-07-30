@@ -40,12 +40,21 @@ function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-
+// работает с куками
 $(document).ready(function(){
+    var fmStateCookie = $.cookie('fmState');
     $(".fm-trigger").click(function(){
         $(".fm-panel").slideToggle("fast");
         $(this).toggleClass("active");
         $("body").toggleClass("active");
+        if ($('body').is('.active')) var StateCookie  = 1;
+        else var StateCookie  = 0;
+        $.cookie('fmState', StateCookie, { expires: 10000, path: '/' });
         return false;
     });
+        if (fmStateCookie == 1) { 
+        $('body').addClass("active");    
+        $('.fm-trigger').addClass('active');
+        $('.fm-panel').show(); 
+    }
 });
