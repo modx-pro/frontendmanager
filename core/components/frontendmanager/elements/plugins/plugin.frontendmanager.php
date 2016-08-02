@@ -2,9 +2,11 @@
 if (!$modx->user->hasSessionContext('mgr')) return;
 switch ($modx->event->name) {
     case 'OnWebPagePrerender':
-		$frontendManager = $modx->getService('frontendmanager','frontendManager', MODX_CORE_PATH . 'components/frontendmanager/model/frontendmanager/', array());
+        $frontendManager = $modx->getService('frontendmanager','frontendManager', MODX_CORE_PATH . 'components/frontendmanager/model/frontendmanager/', array());
         if(!$frontendManager) die('error load frontendmanager');
-        $modx->resource->_output .=  $frontendManager->initialize($modx->context->key);
+        if ($modx->resource->content_type == 1) {
+			$modx->resource->_output .=  $frontendManager->initialize($modx->context->key);
+        }
         break;
     case 'OnBeforeManagerPageInit':
         if ($_GET['frame']) {
