@@ -3,8 +3,8 @@
 $chunks = array();
 
 $tmp = array(
-	'tpl.frontendmanager.panel' => array(
-		'file' => 'panel',
+	'tpl.frontendmanager' => array(
+		'file' => 'frontendmanager',
 		'description' => '',
 	),
 );

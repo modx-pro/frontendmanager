@@ -15,10 +15,14 @@ $tmp = array(
 	),
 	'frontend_tpl' => array(
 		'xtype' => 'textfield',
-		'value' => 'tpl.frontendmanager.panel',
+		'value' => 'tpl.frontendmanager',
 		'area' => 'frontendmanager_frontend',
 	),
-
+	'contenttypes' => array(
+		'xtype' => 'textfield',
+		'value' => '1',
+		'area' => 'frontendmanager_manager',
+	),
 
 	'manager_css' => array(
 		'xtype' => 'textfield',

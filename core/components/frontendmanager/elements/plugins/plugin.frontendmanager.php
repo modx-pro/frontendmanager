@@ -1,10 +1,13 @@
 <?php
-if (!$modx->user->hasSessionContext('mgr')) return;
+if (!$modx->user->hasSessionContext('mgr') || !$modx->user->isMember('Administrator')) return;
 switch ($modx->event->name) {
     case 'OnWebPagePrerender':
-		$frontendManager = $modx->getService('frontendmanager','frontendManager', MODX_CORE_PATH . 'components/frontendmanager/model/frontendmanager/', array());
-        if(!$frontendManager) die('error load frontendmanager');
-        $modx->resource->_output .=  $frontendManager->initialize($modx->context->key);
+        $frontendManager = $modx->getService('frontendmanager','frontendManager', MODX_CORE_PATH . 'components/frontendmanager/model/frontendmanager/', array());
+        if(!$frontendManager) return;
+		$contentTypes = explode(',', $modx->getOption('frontendmanager_contenttypes'));
+        if (in_array($modx->resource->content_type, $contentTypes)) {
+			$modx->resource->_output .=  $frontendManager->initialize($modx->context->key);
+        }
         break;
     case 'OnBeforeManagerPageInit':
         if ($_GET['frame']) {
