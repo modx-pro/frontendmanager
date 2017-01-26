@@ -22,6 +22,8 @@ class frontendManager {
 
 			'connectorUrl' => $connectorUrl,
 
+			'position' => $this->modx->getOption('frontendmanager_frontend_position', null, 'top'),
+
 			'corePath' => $corePath,
 			'modelPath' => $corePath . 'model/',
 			'chunksPath' => $corePath . 'elements/chunks/',
@@ -52,6 +54,7 @@ class frontendManager {
 			'ctx' => $ctx,
 			'jsUrl' => $this->config['jsUrl'],
 			'cssUrl' => $this->config['cssUrl'],
+			'position' => $this->config['position'],
 		);
 
 		$output = '';
@@ -64,7 +67,7 @@ class frontendManager {
 		//$this->modx->regClientScript($this->config['jsUrl'].'web/'.$this->modx->getOption('frontendmanager_frontend_js', NULL, 'frontend.js'));
 		//$this->modx->regClientStartupHTMLBlock($this->pdoTools->getChunk($this->modx->getOption('frontendmanager_frontend_tpl', NULL, 'tpl.frontendmanager.panel')));
 
-		$output .= $this->pdoTools->getChunk($this->modx->getOption('frontendmanager_frontend_tpl', NULL, 'tpl.frontendmanager.panel'));
+		$output .= $this->pdoTools->getChunk($this->modx->getOption('frontendmanager_frontend_tpl', NULL, 'tpl.frontendmanager'));
 
 
 

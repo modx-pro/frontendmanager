@@ -5,6 +5,8 @@ $_lang['area_frontendmanager_frontend'] = 'Frontend';
 $_lang['setting_frontendmanager_frontend_css'] = 'Frontend css file';
 $_lang['setting_frontendmanager_frontend_js'] = 'Frontend js file';
 $_lang['setting_frontendmanager_frontend_tpl'] = 'Frontend chunk';
+$_lang['setting_frontendmanager_frontend_position'] = 'Panel position';
+$_lang['setting_frontendmanager_frontend_position_desc'] = '"top" or "bottom"';
 
 $_lang['area_frontendmanager_manager'] = 'Manager';
 $_lang['setting_frontendmanager_contenttypes'] = 'Allowed content types';

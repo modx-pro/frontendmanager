@@ -18,6 +18,11 @@ $tmp = array(
 		'value' => 'tpl.frontendmanager',
 		'area' => 'frontendmanager_frontend',
 	),
+	'frontend_position' => array(
+		'xtype' => 'textfield',
+		'value' => 'top',
+		'area' => 'frontendmanager_frontend',
+	),
 	'contenttypes' => array(
 		'xtype' => 'textfield',
 		'value' => '1',

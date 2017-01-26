@@ -2,15 +2,11 @@
 if (!$modx->user->hasSessionContext('mgr') || !$modx->user->isMember('Administrator')) return;
 switch ($modx->event->name) {
     case 'OnWebPagePrerender':
+		if (!$modx->resource->get('template')) break;
         $frontendManager = $modx->getService('frontendmanager','frontendManager', MODX_CORE_PATH . 'components/frontendmanager/model/frontendmanager/', array());
-<<<<<<< HEAD
         if(!$frontendManager) return;
 		$contentTypes = explode(',', $modx->getOption('frontendmanager_contenttypes'));
         if (in_array($modx->resource->content_type, $contentTypes)) {
-=======
-        if(!$frontendManager) die('error load frontendmanager');
-        if ($modx->resource->content_type == 1) {
->>>>>>> origin/master
 			$modx->resource->_output .=  $frontendManager->initialize($modx->context->key);
         }
         break;

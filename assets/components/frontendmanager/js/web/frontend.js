@@ -4,7 +4,7 @@ var frontendManager = {
 	},
 	initialize: function() {
 		if (!jQuery().MagnificPopup) document.write('<script src="' + frontendManagerConfig.jsUrl + 'plugins/jquery.magnific-popup.min.js"><\/script>');
-		$('body').addClass('fm');
+		$('body').addClass('fm fm-pos-' + frontendManagerConfig.position);
 		if(getCookie('fm-hide')) $('body').addClass('fm-hide');
 
 		$(document).on('click', 'a[data-action="iframe"]', function() {

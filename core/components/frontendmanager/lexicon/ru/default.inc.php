@@ -5,6 +5,8 @@ $_lang['area_frontendmanager_frontend'] = 'Frontend';
 $_lang['setting_frontendmanager_frontend_css'] = 'Стили для frontend';
 $_lang['setting_frontendmanager_frontend_js'] = 'Скрипт для frontend';
 $_lang['setting_frontendmanager_frontend_tpl'] = 'Чанк панели для frontend';
+$_lang['setting_frontendmanager_frontend_position'] = 'Размещение панели';
+$_lang['setting_frontendmanager_frontend_position_desc'] = 'top или bottom';
 
 $_lang['area_frontendmanager_manager'] = 'Manager';
 $_lang['setting_frontendmanager_contenttypes'] = 'Типы содержимого';
