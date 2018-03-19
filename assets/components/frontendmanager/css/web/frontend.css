@@ -16,7 +16,7 @@ body.fm-pos-top{padding-top:40px!important}
 body .fm-modal .mfp-iframe-scaler iframe{padding:20px;background:#f2f2f2;border-radius:3px}
 body .fm-modal .mfp-close{float:right;width:20px}
 body.fm-hide{padding-top:0!important}
-body.fm-hide .fm-panel{top:-40px}
+body.fm-hide .fm-panel{top:-40px;}
 body.fm-hide .fm-panel a.fm-mode{position:absolute;top:50px;left:10px;height:35px;width:35px;background:#3e4951;border:0;padding:0;border-radius:100%}
 body.fm-hide .fm-panel a.fm-mode span{height:35px;    line-height: 1;width:100%;text-align:center}
 body.fm-hide .fm-panel a.fm-mode span:before{display:none}
@@ -28,6 +28,10 @@ body.fm-pos-bottom{padding-bottom:40px!important}
 body.fm-pos-bottom .fm-panel {    bottom: 0; top: auto;}
 body.fm-pos-bottom.fm-hide .fm-panel {bottom: -40px;}
 body.fm-pos-bottom.fm-hide .fm-panel a.fm-mode {    top: -50px;}
+
+body.fm .ct-widget.ct-ignition {    top: 56px;}
+body.fm-hide .ct-app {display: none !important}
+
 
 @media only screen and (max-width: 1280px) {
 	.fm-panel a span[class^="fm-icon-"]{margin: 0;}

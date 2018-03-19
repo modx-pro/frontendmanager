@@ -55,6 +55,7 @@ class frontendManager {
 			'jsUrl' => $this->config['jsUrl'],
 			'cssUrl' => $this->config['cssUrl'],
 			'position' => $this->config['position'],
+			'auth' => $this->modx->user->getUserToken('mgr'),
 		);
 
 		$output = '';
