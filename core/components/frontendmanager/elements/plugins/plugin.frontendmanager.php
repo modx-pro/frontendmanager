@@ -7,7 +7,14 @@ switch ($modx->event->name) {
         if(!$frontendManager) return;
 		$contentTypes = explode(',', $modx->getOption('frontendmanager_contenttypes'));
         if (in_array($modx->resource->content_type, $contentTypes)) {
-			$modx->resource->_output .=  $frontendManager->initialize($modx->context->key);
+            $html = $frontendManager->initialize($modx->context->key);
+            
+            if (strpos($modx->resource->_output, '</body>') !== false) {
+                $modx->resource->_output =
+                    preg_replace("#(</body>)#i", $html . "\n\\1", $modx->resource->_output, true);
+            } else {
+                $modx->resource->_output .= $html;
+            }
         }
         break;
     case 'OnBeforeManagerPageInit':
