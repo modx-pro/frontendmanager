@@ -1,125 +1,57 @@
-/*
-<script>
-window.onload = function() {
-    var editor = ContentTools.EditorApp.get();
-    editor.init('[data-editable], [data-fixture]', 'data-name');
-    editor.addEventListener('saved', function(ev) {
-        var saved;
-      console.log(ev.detail().regions);
-      if (Object.keys(ev.detail().regions).length === 0) {
-        return;
-      }
-
-      const html = ev.detail().regions[0];
-      // console.log(html);
-
-      const data = new FormData();
-      data.append('content', html)
-      data.append('action', 'resource/update')
-      data.append('id', '1')
-      data.append('context_key', 'web')
-      data.append('syncsite', 1)
-      data.append('HTTP_MODAUTH', frontendManagerConfig.auth)
-
-      axios.post(`http://s12789.h7.modhost.pro/connectors/index.php`, data, {
-          headers: {
-              'Upgrade-Insecure-Requests': 1,
-              // 'Referer': 'http://s12789.h7.modhost.pro/manager/?a=resource/update&id=1',
-              // 'Ref2': 123
-          }
-      })
-
-      // return;
-
-
-      editor.busy(true);
-      saved = (function(_this) {
-        return function() {
-          editor.busy(false);
-          return new ContentTools.FlashUI('ok');
-        };
-      })(this);
-      return setTimeout(saved, 2000);
-    })
-
-}
-</script>
-*/
-
-
 const frontendManager = {
 	config: {
 		panel: '.fm-panel',
 	},
-	initialize: () => {
-		if (!jQuery().MagnificPopup) document.write('<script src="' + frontendManagerConfig.jsUrl + 'plugins/jquery.magnific-popup.min.js"><\/script>');
-		$('body').addClass('fm fm-pos-' + frontendManagerConfig.position);
-		if(getCookie('fm-hide')) $('body').addClass('fm-hide');
+	initialize() {
+		if (typeof frontendManagerConfig === 'undefined') return;
 
-		$(document).on('click', 'a[data-action="iframe"]', function() {
-			frontendManager.open($(this).attr('href'));
-			return false;
-		});
+		document.body.classList.add('fm', `fm-pos-${frontendManagerConfig.position}`);
+		if (this.getCookie('fm-hide')) document.body.classList.add('fm-hide');
 
-		$(document).on('click', '.fm-mode', function(event) {
-			event.preventDefault();
-			var body = $('body');
-			document.cookie = "fm-hide=" + (body.hasClass('fm-hide') ? '' : '1');
-			body.toggleClass('fm-hide');
-		});
+		document.querySelectorAll('a[data-action="iframe"]').forEach((i) => i.addEventListener('click', (e) => {
+			e.preventDefault();
+			this.open(i.getAttribute('href'));
+		}));
 
-		// editor
-		const editor = ContentTools.EditorApp.get()
-    editor.init('[data-editable], [data-fixture]', 'data-name')
-		editor.addEventListener('saved', function(ev) {
-			const regions = ev.detail().regions
-      if (Object.keys(regions).length === 0) return
-
-			editor.busy(true)
-      const data = new FormData();
-      data.append('content', ev.detail().regions[0])
-      data.append('action', 'resource/update')
-      data.append('id', '1')
-      data.append('context_key', 'web')
-      data.append('syncsite', 1)
-      data.append('HTTP_MODAUTH', frontendManagerConfig.auth)
-
-      axios.post(`http://s12789.h7.modhost.pro/connectors/index.php`, data, {
-          headers: {
-              'Upgrade-Insecure-Requests': 1,
-              // 'Referer': 'http://s12789.h7.modhost.pro/manager/?a=resource/update&id=1',
-              // 'Ref2': 123
-          }
-      })
-			.then(response => {
-				editor.busy(false)
-				console.log(response.data);
-			})
-
-    })
-
+		document.querySelectorAll('.fm-mode').forEach((i) => i.addEventListener('click', (e) => {
+			e.preventDefault();
+			document.cookie = `fm-hide=${document.body.classList.contains('fm-hide') ? '' : '1'}`;
+			document.body.classList.toggle('fm-hide');
+		}));
 	},
+	open(url) {
+		const modal = document.createElement('div');
+		const closeButton = document.createElement('button');
+		const iframe = document.createElement('iframe');
+		const iframeWrapper = document.createElement('div');
+		const iframeWrapperLoader = document.createElement('div');
+		const closeModal = () => {
+			document.body.style.overflow = '';
+			document.body.removeChild(modal);
+		}
 
-	open: (link) => {
-		$.magnificPopup.open({
-		  items: {
-		    src: link + '&frame=1'
-		  },
-		  type: 'iframe',
-		  mainClass: 'fm-modal'
-		}, 0);
+		modal.classList.add('fm-modal');
+		closeButton.classList.add('fm-btn-close');
+		iframeWrapper.classList.add('fm-iframe-wrapper');
+		iframeWrapperLoader.classList.add('fm-iframe-loader');
+		iframe.src = `${url}&frame=1`;
+
+		iframeWrapper.appendChild(iframeWrapperLoader);
+		iframeWrapper.appendChild(iframe);
+		modal.appendChild(closeButton);
+		modal.appendChild(iframeWrapper);
+		document.body.appendChild(modal);
+		document.body.style.overflow = 'hidden';
+		document.addEventListener('click', (e) => {
+			if (e.target.classList.contains('fm-modal') || e.target.classList.contains('fm-btn-close')) closeModal();
+		});
+	},
+	getCookie(name) {
+		const result = document.cookie.match(`(^|[^;]+)\s*${name}\s*=\s*([^;]+)`);
+		return result ? decodeURIComponent(result.pop()) : undefined;
 	}
+};
 
-}
-
-if (typeof frontendManagerConfig != 'undefined'){
+document.addEventListener('DOMContentLoaded', () => {
 	frontendManager.initialize();
-}
-
-// functions
-function getCookie(name) {
-  var matches = document.cookie.match(new RegExp(
-    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-  ));
-  return matches ? decodeURIComponent(matches[1]) : undefined;
-}
+});
