@@ -24,7 +24,6 @@ const frontendManager = {
 		const closeButton = document.createElement('button');
 		const iframe = document.createElement('iframe');
 		const iframeWrapper = document.createElement('div');
-		const iframeWrapperLoader = document.createElement('div');
 		const closeModal = () => {
 			document.body.style.overflow = '';
 			document.body.removeChild(modal);
@@ -33,10 +32,8 @@ const frontendManager = {
 		modal.classList.add('fm-modal');
 		closeButton.classList.add('fm-btn-close');
 		iframeWrapper.classList.add('fm-iframe-wrapper');
-		iframeWrapperLoader.classList.add('fm-iframe-loader');
 		iframe.src = `${url}&frame=1`;
 
-		iframeWrapper.appendChild(iframeWrapperLoader);
 		iframeWrapper.appendChild(iframe);
 		modal.appendChild(closeButton);
 		modal.appendChild(iframeWrapper);
