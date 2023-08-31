@@ -146,7 +146,7 @@ body.fm-hide .fm-panel a.fm-mode {
 }
 
 .fm-modal .fm-iframe-wrapper::before {
-    content: 'Загрузка...';
+    content: attr(data-text-load);
     position: absolute;
     top: 0;
     left: 0;
