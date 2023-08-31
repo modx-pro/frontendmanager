@@ -130,6 +130,7 @@ body.fm-hide .fm-panel a.fm-mode {
     width: 100%;
     height: 100%;
     border-radius: .4em;
+    border: 0;
 }
 
 .fm-modal .fm-iframe-wrapper {

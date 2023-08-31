@@ -56,6 +56,9 @@ class frontendManager {
 			'cssUrl' => $this->config['cssUrl'],
 			'position' => $this->config['position'],
 			'auth' => $this->modx->user->getUserToken('mgr'),
+			'modal' => [
+				'textModalLoad' => $this->modx->lexicon('frontendmanager_text_modal_load')
+			],
 		);
 
 		$output = '';
