@@ -12,6 +12,12 @@ const frontendManager = {
 			},
 		},
 	},
+	nodes: {
+		modal: undefined,
+		iframeWrapper: undefined,
+		iframe: undefined,
+		closeButton: undefined,
+	},
 	initialize() {
 		const { cookieKey, className } = this.config.modal;
 		if (typeof frontendManagerConfig === 'undefined') return;
@@ -29,31 +35,37 @@ const frontendManager = {
 			document.cookie = `${cookieKey}=${document.body.classList.contains(cookieKey) ? '' : '1'}`;
 			document.body.classList.toggle(cookieKey);
 		}));
-	},
-	open(url) {
-		const { className, id: modalId } = this.config.modal;
-		const modal = document.createElement('div');
-		const closeButton = document.createElement('button');
-		const iframe = document.createElement('iframe');
-		const iframeWrapper = document.createElement('div');
 
-		modal.id = modalId;
-		modal.classList.add(className.general);
-		closeButton.classList.add(className.closeButton);
-		iframeWrapper.classList.add(className.iframeWrapper);
-		iframe.src = `${url}&frame=1`;
-
-		iframeWrapper.appendChild(iframe);
-		iframeWrapper.setAttribute('data-text-load', frontendManagerConfig.modal.textModalLoad);
-		modal.appendChild(closeButton);
-		modal.appendChild(iframeWrapper);
-		document.body.appendChild(modal);
-		document.body.style.overflow = 'hidden';
 		document.addEventListener('click', (e) => {
 			if (e.target.classList.contains(className.general) || e.target.classList.contains(className.closeButton)) {
 				this.close();
 			}
 		});
+
+		this.createModal();
+	},
+	createModal() {
+		const { className, id: modalId } = this.config.modal;
+
+		this.nodes.modal = document.createElement('div');
+		this.nodes.closeButton = document.createElement('button');
+		this.nodes.iframe = document.createElement('iframe');
+		this.nodes.iframeWrapper = document.createElement('div');
+
+		this.nodes.modal.id = modalId;
+		this.nodes.modal.classList.add(className.general);
+		this.nodes.closeButton.classList.add(className.closeButton);
+		this.nodes.iframeWrapper.classList.add(className.iframeWrapper);
+
+		this.nodes.iframeWrapper.appendChild(this.nodes.iframe);
+		this.nodes.iframeWrapper.dataset.textLoad = frontendManagerConfig.modal.textModalLoad;
+		this.nodes.modal.append(this.nodes.closeButton, this.nodes.iframeWrapper);
+	},
+	open(url) {
+		this.nodes.iframe.src = `${url}&frame=1`;
+
+		document.body.appendChild(this.nodes.modal);
+		document.body.style.overflow = 'hidden';
 	},
 	close() {
 		const modal = document.getElementById(this.config.modal.id);
