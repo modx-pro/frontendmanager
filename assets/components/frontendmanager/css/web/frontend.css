@@ -173,6 +173,7 @@ body.fm-hide .fm-panel a.fm-mode {
     padding: .125em;
     z-index: calc(var(--fm-index) + 2);
     transition: background-color .3s;
+    cursor: pointer;
 }
 
 .fm-modal .fm-btn-close::before {

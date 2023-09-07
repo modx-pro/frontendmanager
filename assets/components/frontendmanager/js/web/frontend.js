@@ -12,67 +12,59 @@ const frontendManager = {
 			},
 		},
 	},
-	nodes: {
-		modal: undefined,
-		iframeWrapper: undefined,
-		iframe: undefined,
-		closeButton: undefined,
-	},
 	initialize() {
 		const { cookieKey, className } = this.config.modal;
 		if (typeof frontendManagerConfig === 'undefined') return;
 
+		this.panel = document.querySelector(this.config.panel);
+
 		document.body.classList.add('fm', `fm-pos-${frontendManagerConfig.position}`);
-		if (this.getCookie(cookieKey)) document.body.classList.add(cookieKey);
+		this.getCookie(cookieKey) && document.body.classList.add(cookieKey);
 
-		document.querySelectorAll('a[data-action="iframe"]').forEach((i) => i.addEventListener('click', (e) => {
-			e.preventDefault();
-			this.open(i.getAttribute('href'));
-		}));
+		this.panel.querySelectorAll(':scope a[data-action="iframe"]')
+			.forEach((i) => i.addEventListener('click', (e) => {
+				e.preventDefault();
+				this.open(i.getAttribute('href'));
+			}));
 
-		document.querySelectorAll(`.${className.modeButton}`).forEach((i) => i.addEventListener('click', (e) => {
-			e.preventDefault();
-			document.cookie = `${cookieKey}=${document.body.classList.contains(cookieKey) ? '' : '1'}`;
-			document.body.classList.toggle(cookieKey);
-		}));
-
-		document.addEventListener('click', (e) => {
-			if (e.target.classList.contains(className.general) || e.target.classList.contains(className.closeButton)) {
-				this.close();
-			}
-		});
+		document.querySelectorAll(`.${className.modeButton}`)
+			.forEach((i) => i.addEventListener('click', (e) => {
+				e.preventDefault();
+				document.cookie = `${cookieKey}=${document.body.classList.contains(cookieKey) ? '' : '1'}`;
+				document.body.classList.toggle(cookieKey);
+			}));
 
 		this.createModal();
 	},
 	createModal() {
 		const { className, id: modalId } = this.config.modal;
 
-		this.nodes.modal = document.createElement('div');
-		this.nodes.closeButton = document.createElement('button');
-		this.nodes.iframe = document.createElement('iframe');
-		this.nodes.iframeWrapper = document.createElement('div');
+		this.modal = document.createElement('div');
+		this.modal.id = modalId;
+		this.modal.classList.add(className.general);
 
-		this.nodes.modal.id = modalId;
-		this.nodes.modal.classList.add(className.general);
-		this.nodes.closeButton.classList.add(className.closeButton);
-		this.nodes.iframeWrapper.classList.add(className.iframeWrapper);
+		this.closeButton = document.createElement('button');
+		this.closeButton.classList.add(className.closeButton);
 
-		this.nodes.iframeWrapper.appendChild(this.nodes.iframe);
-		this.nodes.iframeWrapper.dataset.textLoad = frontendManagerConfig.modal.textModalLoad;
-		this.nodes.modal.append(this.nodes.closeButton, this.nodes.iframeWrapper);
+		this.iframe = document.createElement('iframe');
+		this.iframeWrapper = document.createElement('div');
+		this.iframeWrapper.classList.add(className.iframeWrapper);
+		this.iframeWrapper.append(this.iframe);
+		this.iframeWrapper.dataset.textLoad = frontendManagerConfig.modal.textModalLoad;
+
+		this.modal.append(this.closeButton, this.iframeWrapper);
+
+		this.closeButton.addEventListener('click', () => this.close());
 	},
 	open(url) {
-		this.nodes.iframe.src = `${url}&frame=1`;
-
-		document.body.appendChild(this.nodes.modal);
+		this.iframe.src = url + '&frame=1';
 		document.body.style.overflow = 'hidden';
+		document.body.append(this.modal);
 	},
 	close() {
-		const modal = document.getElementById(this.config.modal.id);
+		document.body.removeChild(this.modal);
 		document.body.style.overflow = '';
-
-		if (!modal) return;
-		document.body.removeChild(modal);
+		this.iframe.src = '';
 	},
 	getCookie(name) {
 		const result = document.cookie.match(`(^|[^;]+)\s*${name}\s*=\s*([^;]+)`);
