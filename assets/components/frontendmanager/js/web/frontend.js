@@ -35,6 +35,7 @@ const frontendManager = {
 			}));
 
 		this.createModal();
+		this.panel.classList.add('fm-panel--show');
 	},
 	createModal() {
 		const { className, id: modalId } = this.config.modal;
@@ -63,13 +64,20 @@ const frontendManager = {
 		});
 	},
 	open(url) {
+		const scrollPadding = window.innerWidth - document.documentElement.clientWidth;
+
 		this.iframe.src = url + '&frame=1';
 		document.body.style.overflow = 'hidden';
 		document.body.append(this.modal);
+
+		if(scrollPadding) {
+			document.body.style.paddingRight = `${scrollPadding}px`;
+		}
 	},
 	close() {
 		document.body.removeChild(this.modal);
 		document.body.style.overflow = '';
+		document.body.style.paddingRight = '';
 		this.iframe.src = '';
 	},
 	getCookie(name) {
@@ -78,6 +86,4 @@ const frontendManager = {
 	}
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-	frontendManager.initialize();
-});
+frontendManager.initialize();
