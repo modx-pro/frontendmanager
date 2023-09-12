@@ -134,14 +134,13 @@ body.fm-hide .fm-panel a.fm-mode {
 }
 
 .fm-modal .fm-iframe-wrapper {
-    width: 80vw;
-    height: 80vh;
     border: 0;
     position: absolute;
     background-color: var(--fm-color-primary);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 10px;
+    left: 10px;
+    right: 50px;
+    bottom: 10px;
     border-radius: .4em;
 }
 
@@ -162,14 +161,14 @@ body.fm-hide .fm-panel a.fm-mode {
 
 .fm-modal .fm-btn-close {
     position: absolute;
-    right: 1.25em;
-    top: 1.25em;
+    right: 10px;
+    top: 10px;
     background-color: var(--fm-color-primary);
     color: white;
     border: none;
     border-radius: 50%;
-    width: 2.5em;
-    height: 2.5em;
+    width: 30px;
+    height: 30px;
     padding: .125em;
     z-index: calc(var(--fm-index) + 2);
     transition: background-color .3s;
