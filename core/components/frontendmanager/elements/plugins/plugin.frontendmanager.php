@@ -1,8 +1,10 @@
 <?php
 if (!$modx->user->hasSessionContext('mgr')) return;
 if (!$modx->user->isMember(explode(',', $modx->getOption('frontendmanager_active_groups', null, '')))) return;
-if (in_array($modx->resource->get('id'), explode(',', $modx->getOption('frontendmanager_ignore_resources', null, '')))) return;
-if (in_array($modx->resource->get('template'), explode(',', $modx->getOption('frontendmanager_ignore_templates', null, '')))) return;
+if ($modx->resource) {
+	if (in_array($modx->resource->get('id'), explode(',', $modx->getOption('frontendmanager_ignore_resources', null, '')))) return;
+	if (in_array($modx->resource->get('template'), explode(',', $modx->getOption('frontendmanager_ignore_templates', null, '')))) return;
+}
 switch ($modx->event->name) {
     case 'OnWebPagePrerender':
 	if (!$modx->resource->get('template')) break;
