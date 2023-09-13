@@ -39,6 +39,21 @@ $tmp = array(
 		'value' => 'manager.js',
 		'area' => 'frontendmanager_manager',
 	),
+	'ignore_templates' => array(
+		'xtype' => 'textfield',
+		'value' => '',
+		'area' => 'frontendmanager_manager',
+	),
+	'ignore_resources' => array(
+		'xtype' => 'textfield',
+		'value' => '',
+		'area' => 'frontendmanager_manager',
+	),
+	'active_groups' => array(
+		'xtype' => 'textfield',
+		'value' => 'Administrator',
+		'area' => 'frontendmanager_manager',
+	),
 );
 
 foreach ($tmp as $k => $v) {
