@@ -1,125 +1,89 @@
-/*
-<script>
-window.onload = function() {
-    var editor = ContentTools.EditorApp.get();
-    editor.init('[data-editable], [data-fixture]', 'data-name');
-    editor.addEventListener('saved', function(ev) {
-        var saved;
-      console.log(ev.detail().regions);
-      if (Object.keys(ev.detail().regions).length === 0) {
-        return;
-      }
-
-      const html = ev.detail().regions[0];
-      // console.log(html);
-
-      const data = new FormData();
-      data.append('content', html)
-      data.append('action', 'resource/update')
-      data.append('id', '1')
-      data.append('context_key', 'web')
-      data.append('syncsite', 1)
-      data.append('HTTP_MODAUTH', frontendManagerConfig.auth)
-
-      axios.post(`http://s12789.h7.modhost.pro/connectors/index.php`, data, {
-          headers: {
-              'Upgrade-Insecure-Requests': 1,
-              // 'Referer': 'http://s12789.h7.modhost.pro/manager/?a=resource/update&id=1',
-              // 'Ref2': 123
-          }
-      })
-
-      // return;
-
-
-      editor.busy(true);
-      saved = (function(_this) {
-        return function() {
-          editor.busy(false);
-          return new ContentTools.FlashUI('ok');
-        };
-      })(this);
-      return setTimeout(saved, 2000);
-    })
-
-}
-</script>
-*/
-
-
 const frontendManager = {
 	config: {
 		panel: '.fm-panel',
+		modal: {
+			id: 'fm-modal',
+			cookieKey: 'fm-hide',
+			className: {
+				general: 'fm-modal',
+				iframeWrapper: 'fm-iframe-wrapper',
+				closeButton: 'fm-btn-close',
+				modeButton: 'fm-mode',
+			},
+		},
 	},
-	initialize: () => {
-		if (!jQuery().MagnificPopup) document.write('<script src="' + frontendManagerConfig.jsUrl + 'plugins/jquery.magnific-popup.min.js"><\/script>');
-		$('body').addClass('fm fm-pos-' + frontendManagerConfig.position);
-		if(getCookie('fm-hide')) $('body').addClass('fm-hide');
+	initialize() {
+		const { cookieKey, className } = this.config.modal;
+		if (typeof frontendManagerConfig === 'undefined') return;
 
-		$(document).on('click', 'a[data-action="iframe"]', function() {
-			frontendManager.open($(this).attr('href'));
-			return false;
-		});
+		this.panel = document.querySelector(this.config.panel);
 
-		$(document).on('click', '.fm-mode', function(event) {
-			event.preventDefault();
-			var body = $('body');
-			document.cookie = "fm-hide=" + (body.hasClass('fm-hide') ? '' : '1');
-			body.toggleClass('fm-hide');
-		});
+		document.body.classList.add('fm', `fm-pos-${frontendManagerConfig.position}`);
+		this.getCookie(cookieKey) && document.body.classList.add(cookieKey);
 
-		// editor
-		const editor = ContentTools.EditorApp.get()
-    editor.init('[data-editable], [data-fixture]', 'data-name')
-		editor.addEventListener('saved', function(ev) {
-			const regions = ev.detail().regions
-      if (Object.keys(regions).length === 0) return
+		this.panel.querySelectorAll(':scope a[data-action="iframe"]')
+			.forEach((i) => i.addEventListener('click', (e) => {
+				e.preventDefault();
+				this.open(i.getAttribute('href'));
+			}));
 
-			editor.busy(true)
-      const data = new FormData();
-      data.append('content', ev.detail().regions[0])
-      data.append('action', 'resource/update')
-      data.append('id', '1')
-      data.append('context_key', 'web')
-      data.append('syncsite', 1)
-      data.append('HTTP_MODAUTH', frontendManagerConfig.auth)
+		document.querySelectorAll(`.${className.modeButton}`)
+			.forEach((i) => i.addEventListener('click', (e) => {
+				e.preventDefault();
+				document.cookie = `${cookieKey}=${document.body.classList.contains(cookieKey) ? '' : '1'}`;
+				document.body.classList.toggle(cookieKey);
+			}));
 
-      axios.post(`http://s12789.h7.modhost.pro/connectors/index.php`, data, {
-          headers: {
-              'Upgrade-Insecure-Requests': 1,
-              // 'Referer': 'http://s12789.h7.modhost.pro/manager/?a=resource/update&id=1',
-              // 'Ref2': 123
-          }
-      })
-			.then(response => {
-				editor.busy(false)
-				console.log(response.data);
-			})
-
-    })
-
+		this.createModal();
+		this.panel.classList.add('fm-panel--show');
 	},
+	createModal() {
+		const { className, id: modalId } = this.config.modal;
 
-	open: (link) => {
-		$.magnificPopup.open({
-		  items: {
-		    src: link + '&frame=1'
-		  },
-		  type: 'iframe',
-		  mainClass: 'fm-modal'
-		}, 0);
+		this.modal = document.createElement('div');
+		this.modal.id = modalId;
+		this.modal.classList.add(className.general);
+
+		this.closeButton = document.createElement('button');
+		this.closeButton.classList.add(className.closeButton);
+
+		this.iframe = document.createElement('iframe');
+		this.iframeWrapper = document.createElement('div');
+		this.iframeWrapper.classList.add(className.iframeWrapper);
+		this.iframeWrapper.append(this.iframe);
+		this.iframeWrapper.dataset.textLoad = frontendManagerConfig.modal.textModalLoad;
+
+		this.modal.append(this.closeButton, this.iframeWrapper);
+
+		document.addEventListener('click', ({ target }) => {
+			if (target !== this.modal && target !== this.closeButton) {
+				return;
+			}
+
+			this.close();
+		});
+	},
+	open(url) {
+		const scrollPadding = window.innerWidth - document.documentElement.clientWidth;
+
+		this.iframe.src = url + '&frame=1';
+		document.body.style.overflow = 'hidden';
+		document.body.append(this.modal);
+
+		if(scrollPadding) {
+			document.body.style.paddingRight = `${scrollPadding}px`;
+		}
+	},
+	close() {
+		document.body.removeChild(this.modal);
+		document.body.style.overflow = '';
+		document.body.style.paddingRight = '';
+		this.iframe.src = '';
+	},
+	getCookie(name) {
+		const result = document.cookie.match(`(^|[^;]+)\s*${name}\s*=\s*([^;]+)`);
+		return result ? decodeURIComponent(result.pop()) : undefined;
 	}
+};
 
-}
-
-if (typeof frontendManagerConfig != 'undefined'){
-	frontendManager.initialize();
-}
-
-// functions
-function getCookie(name) {
-  var matches = document.cookie.match(new RegExp(
-    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-  ));
-  return matches ? decodeURIComponent(matches[1]) : undefined;
-}
+frontendManager.initialize();
