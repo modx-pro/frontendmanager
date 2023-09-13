@@ -13,6 +13,13 @@
 	box-sizing: border-box;
 }
 
+.fm-modal,
+.fm-modal *,
+.fm-modal *::before,
+.fm-modal *::after {
+	box-sizing: border-box;
+}
+
 .fm-panel {
 	display: none;
 	flex-direction: row;
