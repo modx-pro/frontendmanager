@@ -16,6 +16,13 @@ $_lang['setting_frontendmanager_manager_css_desc'] = 'To hide unnecessary blocks
 $_lang['setting_frontendmanager_manager_js'] = 'Manager js';
 $_lang['setting_frontendmanager_manager_js_desc'] = 'To reload the page after saving';
 
+$_lang['setting_frontendmanager_ignore_templates'] = 'Ignore templates';
+$_lang['setting_frontendmanager_ignore_templates_desc'] = 'Do not display a panel for resources with the specified templates. Separated by commas.';
+$_lang['setting_frontendmanager_ignore_resources'] = 'Ignore resources';
+$_lang['setting_frontendmanager_ignore_resources_desc'] = 'Do not display the panel for the specified resources. Separated by commas.';
+$_lang['setting_frontendmanager_active_groups'] = 'Display for groups';
+$_lang['setting_frontendmanager_active_groups_desc'] = 'Display the panel only for the specified user groups. Separated by commas.';
+
 $_lang['frontendmanager_btn_edit'] = 'Edit';
 $_lang['frontendmanager_btn_users'] = 'Users';
 $_lang['frontendmanager_btn_ms2'] = 'Orders';
