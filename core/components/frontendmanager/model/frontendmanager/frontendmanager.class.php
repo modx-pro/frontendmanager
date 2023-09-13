@@ -3,7 +3,6 @@ class frontendManager {
 	/* @var modX $modx */
 	public $modx;
 
-
 	/**
 	 * @param modX $modx
 	 * @param array $config
@@ -19,11 +18,8 @@ class frontendManager {
 			'assetsUrl' => $assetsUrl,
 			'cssUrl' => $assetsUrl . 'css/',
 			'jsUrl' => $assetsUrl . 'js/',
-
 			'connectorUrl' => $connectorUrl,
-
 			'position' => $this->modx->getOption('frontendmanager_frontend_position', null, 'top'),
-
 			'corePath' => $corePath,
 			'modelPath' => $corePath . 'model/',
 			'chunksPath' => $corePath . 'elements/chunks/',
@@ -37,8 +33,7 @@ class frontendManager {
 		$this->modx->lexicon->load('frontendmanager:default');
 
 		$this->pdoTools = $this->modx->getService('pdoFetch');
-        $this->pdoTools->setConfig($this->config);
-
+		$this->pdoTools->setConfig($this->config);
 	}
 
 
@@ -46,8 +41,8 @@ class frontendManager {
 
 		$this->config = array_merge($this->config, $scriptProperties);
 		if (!empty($this->initialized[$ctx])) {
-            return true;
-        }
+			return true;
+		}
 		$this->initialized[$ctx] = true;
 
 		$config_js = array(
@@ -56,26 +51,27 @@ class frontendManager {
 			'cssUrl' => $this->config['cssUrl'],
 			'position' => $this->config['position'],
 			'auth' => $this->modx->user->getUserToken('mgr'),
+			'modal' => [
+				'textModalLoad' => $this->modx->lexicon('frontendmanager_text_modal_load')
+			],
 		);
 
-		$output = '';
-		$output .= '<script type="text/javascript">frontendManagerConfig=' . $this->modx->toJSON($config_js) . ';</script>';
-		$output .= '<link rel="stylesheet" href="'.$this->config['cssUrl'].'web/'.$this->modx->getOption('frontendmanager_frontend_css', NULL, 'frontend.css').'" type="text/css">';
-		$output .= '<script type="text/javascript" src="'.$this->config['jsUrl'].'web/'.$this->modx->getOption('frontendmanager_frontend_js', NULL, 'frontend.js').'"></script>';
+		$output = &$this->modx->resource->_output;
+		$assets = [];
 
-		//$this->modx->regClientStartupScript('<script type="text/javascript">frontendManagerConfig=' . $this->modx->toJSON($config_js) . ';</script>', true);
-		//$this->modx->regClientCSS($this->config['cssUrl'].'web/'.$this->modx->getOption('frontendmanager_frontend_css', NULL, 'frontend.css'));
-		//$this->modx->regClientScript($this->config['jsUrl'].'web/'.$this->modx->getOption('frontendmanager_frontend_js', NULL, 'frontend.js'));
-		//$this->modx->regClientStartupHTMLBlock($this->pdoTools->getChunk($this->modx->getOption('frontendmanager_frontend_tpl', NULL, 'tpl.frontendmanager.panel')));
+		if (strpos($output, '</head>') === false || strpos($output, '</body>') === false) {
+			return;
+		}
 
-		$output .= $this->pdoTools->getChunk($this->modx->getOption('frontendmanager_frontend_tpl', NULL, 'tpl.frontendmanager'));
+		$assets[] = '<link rel="stylesheet" href="' . $this->config['cssUrl'].'web/'.$this->modx->getOption('frontendmanager_frontend_css', NULL, 'frontend.css') . '" type="text/css">';
+		$assets[] = '<script defer>frontendManagerConfig=' . $this->modx->toJSON($config_js) . ';</script>';
+		$assets[] = '<script src="' . $this->config['jsUrl'].'web/'.$this->modx->getOption('frontendmanager_frontend_js', NULL, 'frontend.js') . '" defer></script>';
 
+		$chunk_fm = $this->pdoTools->getChunk($this->modx->getOption('frontendmanager_frontend_tpl', NULL, 'tpl.frontendmanager.panel'));
 
+		$assets = join(PHP_EOL, $assets);
 
-		return $output;
+		$output = preg_replace("/(<\/head>)/i", $assets . "\n\\1", $output, 1);
+		$output = preg_replace("/(<\/body>)/i", $chunk_fm . "\n\\1", $output, 1);
 	}
-
-
-
-
 }

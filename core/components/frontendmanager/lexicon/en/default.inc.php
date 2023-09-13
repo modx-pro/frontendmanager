@@ -23,3 +23,5 @@ $_lang['frontendmanager_btn_context'] = 'Context settings';
 $_lang['frontendmanager_btn_settings'] = 'Settings';
 $_lang['frontendmanager_btn_log'] = 'Error log';
 $_lang['frontendmanager_btn_cache'] = 'Clear cache';
+
+$_lang['frontendmanager_text_modal_load'] = 'Loading...';

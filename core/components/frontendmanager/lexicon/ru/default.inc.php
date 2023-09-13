@@ -23,3 +23,5 @@ $_lang['frontendmanager_btn_context'] = 'Настройки контекста';
 $_lang['frontendmanager_btn_settings'] = 'Настройки';
 $_lang['frontendmanager_btn_log'] = 'Журнал ошибок';
 $_lang['frontendmanager_btn_cache'] = 'Очистить кэш';
+
+$_lang['frontendmanager_text_modal_load'] = 'Загрузка...';
