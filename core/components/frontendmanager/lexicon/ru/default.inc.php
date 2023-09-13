@@ -16,6 +16,13 @@ $_lang['setting_frontendmanager_manager_css_desc'] = 'Для скрытия не
 $_lang['setting_frontendmanager_manager_js'] = 'Скрипт для manager';
 $_lang['setting_frontendmanager_manager_js_desc'] = 'Для перезагрузки страницы после сохранения.';
 
+$_lang['setting_frontendmanager_ignore_templates'] = 'Игнорировать шаблоны';
+$_lang['setting_frontendmanager_ignore_templates_desc'] = 'Не выводить панель у ресурсов с указанными шаблонами. Через запятую.';
+$_lang['setting_frontendmanager_ignore_resources'] = 'Игнорировать ресурсы';
+$_lang['setting_frontendmanager_ignore_resources_desc'] = 'Не выводить панель у указанных ресурсов. Через запятую.';
+$_lang['setting_frontendmanager_active_groups'] = 'Выводить для групп';
+$_lang['setting_frontendmanager_active_groups_desc'] = 'Выводить панель только у указанных групп пользователей. Через запятую.';
+
 $_lang['frontendmanager_btn_edit'] = 'Редактировать';
 $_lang['frontendmanager_btn_users'] = 'Пользователи';
 $_lang['frontendmanager_btn_ms2'] = 'Заказы';
