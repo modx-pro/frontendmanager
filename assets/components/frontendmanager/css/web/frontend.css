@@ -6,6 +6,26 @@
 	--fm-index: 1040;
 }
 
+.fm-hide .fm-panel:has(.fm-mode:hover) {
+    background: var(--fm-color-primary);
+    pointer-events: auto;
+    overflow-x: auto;
+}
+.fm-hide .fm-panel:has(.fm-mode:hover) .fm-row a {
+    opacity: 1;
+    pointer-events: auto;
+}
+.fm-hide .fm-panel:hover {
+    display: flex;
+    background: var(--fm-color-primary);
+    pointer-events: auto;
+    overflow-x: auto;
+}
+.fm-hide .fm-panel:hover .fm-row a {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 .fm-panel,
 .fm-panel *,
 .fm-panel *::before,
