@@ -6,6 +6,10 @@
 	--fm-index: 1040;
 }
 
+body.fm:not(.fm-hide) {
+    padding-top: 45.5px;
+}
+
 .fm-panel,
 .fm-panel *,
 .fm-panel *::before,
