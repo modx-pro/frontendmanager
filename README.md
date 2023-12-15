@@ -21,9 +21,19 @@
 - В системных настройках доступны такие параметры как:
   - `frontendmanager_frontend_position` - отвечает за размещение панели.
   - `frontendmanager_contenttypes` - типы содержимого для вывода панели.
+  - `frontendmanager_ignore_resources` - какие ресурсы игнорировать (ID через запятую).
+  - `frontendmanager_ignore_templates` - какие шаблоны ресурсов игнорировать (ID через запятую).
   - а также настройки стилей для `manager` и `frontend` части сайта.
 - Чанк `tpl.frontendmanager` для вывода панели и ссылок.
 - Плагин `frontendmanager` для вставки панели на страницу (доступен естественно залогиненным в админку пользователям).
+
+## Дополнительно
+
+В Iframe можно открывать страницы админки не только из панели FrontendManager, но и любые ссылки. Например, вы можете настроить на бэкенде вывод для администратора ссылок на редактирование у каждой статьи в каталоге статей, и редактировать их прямо из общего списка:
+
+```html
+<a href="/manager/?a=resource/update&id=111" onclick="event.preventDefault();frontendManager.open(this.href)">редактировать</a>
+```
 
 ![модальное окно панели управления frontendManager](https://github.com/alexsoin/modx-frontendmanager/assets/3787132/6f7c3b30-cda5-4d5f-a2a9-f8a719ddbd0b)
 
