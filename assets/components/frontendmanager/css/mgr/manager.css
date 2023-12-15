@@ -13,7 +13,9 @@ label[for="modx-resource-template"] + div,
 	display:none !important;
 }
 
-
+#modx-content {
+	left: 0 !important;
+}
 
 #modx-action-buttons {top: 0;}
 #modx-content {width:100% !important;}
