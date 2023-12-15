@@ -21,7 +21,7 @@ const frontendManager = {
 		document.body.classList.add('fm', `fm-pos-${frontendManagerConfig.position}`);
 		this.getCookie(cookieKey) && document.body.classList.add(cookieKey);
 
-		this.panel.querySelectorAll(':scope a[data-action="iframe"]')
+		document.querySelectorAll('.fm-row a[data-action="iframe"], a[data-frontendmanager][data-action="iframe"]')
 			.forEach((i) => i.addEventListener('click', (e) => {
 				e.preventDefault();
 				this.open(i.getAttribute('href'));
