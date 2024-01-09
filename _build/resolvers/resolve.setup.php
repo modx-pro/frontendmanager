@@ -18,7 +18,7 @@ $packages = [
  *     - success: An integer (0 or 1) - 1 in case of successful installation, 0 otherwise.
  *     - message: A message about the installation result.
  */
-function installPackage($packageName, $providerName)
+$installPackage = function ($packageName, $providerName = null) use ($modx)
 {
 	if (!$providerName || !$provider = $modx->getObject('transport.modTransportProvider', ['service_url:LIKE' => '%' . $providerName . '%'])) {
 		$provider = $modx->getObject('transport.modTransportProvider', 1);
@@ -102,7 +102,7 @@ function installPackage($packageName, $providerName)
 		'success' => 0,
 		'message' => $messages['install_failed'],
 	];
-}
+};
 
 $success = false;
 /** @var array $options */
@@ -110,8 +110,8 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
 	case xPDOTransport::ACTION_INSTALL:
 	case xPDOTransport::ACTION_UPGRADE:
 		foreach ($packages as $name => $providerName) {
-			$modx->log(modX::LOG_LEVEL_INFO, $modx->getOption('manager_language') == 'ru' ? "Попытка установки <b>{$name}</b>. Пожалуйста, подождите..." : "Trying to install <b>{$name}</b>. Please wait...");
-			$response = installPackage($name, $providerName);
+			$modx->log(modX::LOG_LEVEL_INFO, "Trying to install <b>{$name}</b>. Please wait...");
+			$response = $installPackage($name, $providerName);
 			$level = $response['success']
 				? modX::LOG_LEVEL_INFO
 				: modX::LOG_LEVEL_ERROR;
