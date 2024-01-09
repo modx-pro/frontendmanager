@@ -50,5 +50,5 @@ define('BUILD_PLUGIN_STATIC', false);
 
 $BUILD_RESOLVERS = array(
 	'chunks',
-	//'setup',
+	'setup',
 );
